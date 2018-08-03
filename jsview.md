@@ -816,6 +816,59 @@ ECMAScript5新增的方法，为了规范化原型继承。这个方法接收两
 
 Object.create() 方法创建一个拥有指定原型和若干个指定属性的对象。
 
+## object.create() 与 new 的区别
+
+Object.create 在创建对象时，做了如下代码步骤：
+
+```js
+Object.prototype.create = function(a){
+    var F = Function (){};
+    F.prototype = a;
+    return new F();
+}
+```
+
+在创建一个新对象时，实际上是将新创建的F函数的prototype指向了test。
+
+由于create的第一个参数可以是null，所以用create创建出来的对象的内部属性[[Prototype]]可以指向null，这样的话，创建出来的对象就与内建Object.prototype对象相似了，都指向null。这是其它任何创建对象方式如：new Object，｛｝等不能达到的，这些方式创建出来的对象都有一个内部属性[[Prototype]]指向不为null的对象。
+
+new关键字
+
+```js
+function Test(){
+    this.a = 1;
+}
+var testA = new Test();
+testA.a = 2;
+console.log(testA.a);//2
+delete testA.a;
+console.log(testA.a);//undefined
+```
+
+当初始化实例testA后，立即给testA.val = 2.此时的第一console打印的是2，然后将属性testA.val删除后，第二个console打印的却是undefined而不是1。
+从这点我们可以看出它与Object.create的原理不一样
+
+```js
+var testA = {};
+Test.apply(testA);
+testA.__proto__ = Test.prototype;
+```
+
+可以看出，new 在创建对象的时候，实际上是分为两部分实例化新对象。第一部分是调用函数，第二部分是将函数的prototype复制份给testA对象。
+
+object.create()的__proto__指向第一个参数
+
+new object的__proto__指向空对象
+
+## Object.create(null) 和 {} 区别是什么
+
+Object.create(null)没有继承任何原型方法，也就是说它的原型链没有上一层。
+
+```js
+console.log(Object.create({}).toString);   // function toString() { [native code] }
+console.log(Object.create(null).toString); // undefined
+```
+
 ## 深拷贝和浅拷贝
 
  **对于原始类型如字符串，浅拷贝是对值的复制，对于引用类型如对象来说，浅拷贝是对对象地址的复制**。
@@ -992,4 +1045,106 @@ JavaScript 函数有两个内部方法：[[Call]] 和 [[Construct]]。
 
 6.没有 super
 连原型都没有，自然也不能通过 super 来访问原型的属性，所以箭头函数也是没有 super 的，不过跟 this、arguments、new.target 一样，这些值由外围最近一层非箭头函数决定。
+
+## 如何解决ajax无法后退的问题
+
+*history.state*
+当前URL下对应的状态信息。如果当前URL不是通过pushState或者replaceState产生的，那么history.state是null。
+
+*history.pushState(state, title, url)*
+将当前URL和history.state加入到history中，并用新的state和URL替换当前。不会造成页面刷新。
+
+state：与要跳转到的URL对应的状态信息。
+
+title：页面的题目,假如没有就穿空字符串就可以。
+
+url：要跳转到的URL地址，不能跨域。
+
+*history.replaceState*
+用新的state和URL替换当前。不会造成页面刷新。
+
+state：与要跳转到的URL对应的状态信息。
+
+title：页面的题目,假如没有就穿空字符串就可以。
+
+url：要跳转到的URL地址，不能跨域。
+
+*window.onpopstate*
+history.go和history.back（包括用户按浏览器历史前进后退按钮）触发，并且页面无刷的时候（由于使用pushState修改了history）会触发popstate事件，事件发生时浏览器会从history中取出URL和对应的state对象替换当前的URL和history.state。通过event.state也可以获取history.state。
+
+支持性判断
+
+`if ('pushState' in history) {...}`
+
+**相关代码**
+假如我们动态的html代码id是haorooms。
+
+定义如下函数
+
+```js
+function processAjaxData(obj, url){
+     document.getElementById("haorooms").innerHTML = obj.html;
+     document.title = obj.pageTitle;
+     window.history.pushState({"html":obj.html,"pageTitle":obj.pageTitle},"", url);
+ }
+```
+
+obj是后台ajax返回来的数据,obj.html来替换动态haorooms下面的内容，页面标题是返回的pageTitle标题。
+
+而当有浏览者点击浏览器“后退”或“前进”按钮时，我们用下面的代码来响应用户的操作：
+
+```js
+window.onpopstate = function(event){
+    if(event.state){
+        document.getElementById("haorooms").innerHTML = event.state.html;
+        document.title = event.state.pageTitle;
+    }
+};
+```
+
+**兼容性**
+谷歌浏览器，火狐浏览器，Safafi浏览器、IE10+等现代浏览器都支持这种技术。假如你感兴趣，可以试试！
+
+**其他场景的应用**
+历史记录操作方法应用很广泛，我们在SPA页面中广发应用。当然，我们还有另外一个应用场景，场景如下：
+
+点击列表内容，弹窗显示详情，详情中有一些介绍的链接，我们点击链接再次跳转到详情的详情！假如我们按历史返回，只能返回列表，弹窗就不会显示了，我们利用历史记录pushState，就可以实现弹窗跳转到详情的详情，然后再返回到弹窗。操作方法就是：
+
+```js
+window.history.pushState({"html": datahtml, pageTitle: titlehtml, id: id}, "", lurl);
+```
+
+把我们的数据存到pushState中，然后在页面初始化的时候，绑定到页面中。可以用
+
+```js
+if ('pushState' in history && history.state) {//进行初始化页面操作}
+```
+
+**小问题**
+当我们每次点击，都会存一个pushState，当我们列表返回的时候，我们期望的效果是列表的上一次记录。那么我们用：
+
+```js
+window.history.replaceState({"html": datahtml, pageTitle: titlehtml, id: id}, "", lurl);
+```
+
+每次都对历史进行替换，而不是创建。就可以实现我们想要的效果！
+
+**监听手机返回键或者浏览器返回其他方案**
+有网友用[Document.hidden](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/hidden)
+
+```js
+var hiddenProperty = 'hidden' in document ? 'hidden' :
+    'webkitHidden' in document ? 'webkitHidden' :
+    'mozHidden' in document ? 'mozHidden' :
+    null;
+var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+var onVisibilityChange = function(){
+    if (document[hiddenProperty]) {
+        console.log('页面非激活');
+    }else{
+        console.log('页面激活')
+    }
+}
+document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+```
 
