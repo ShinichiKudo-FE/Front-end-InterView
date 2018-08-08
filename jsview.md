@@ -102,7 +102,7 @@ JavaScript对象应当都通过prototype链关联起来，最顶层是Object，�
 
 ## javascript模块化
 
-![模块化](https://zhanghao-web.github.io/2018/07/25/JavaScript%E6%A8%A1%E5%9D%97%E5%8C%96-Commonjs%E3%80%81AMD%E3%80%81CMD%E3%80%81ES6-modules/#more)
+[模块化](https://zhanghao-web.github.io/2018/07/25/study/JavaScript%E6%A8%A1%E5%9D%97%E5%8C%96-Commonjs%E3%80%81AMD%E3%80%81CMD%E3%80%81ES6-modules/)
 
 ## IIFE 立即执行函数
 
@@ -135,7 +135,7 @@ var result = (function () {
 result; // "Barry"
 ```
 
-## null 与 undefined的区别
+## null与undefined的区别
 
 null和undefined基本是同义的
 
@@ -248,11 +248,11 @@ alert(c());
 
 ## 你是如何组织自己的代码？是使用模块模式，还是使用经典继承的方法？
 
-![组织代码](http://metaduck.com/08-module-pattern-inheritance.html)
+[组织代码](http://metaduck.com/08-module-pattern-inheritance.html)
 
 ## 宿主对象 (host objects) 和原生对象 (native objects)
 
-![关系](https://img-blog.csdn.net/20130624221901250?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZm9hbWZsb3dlcg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+[关系](http://hexobed.oss-cn-beijing.aliyuncs.com/18-8-8/70771078.jpg)
 
 1、内置（Build-in）对象与原生（Naitve）对象的区别在于：前者总是在引擎初始化阶段就被创建好的对象，是后者的一个子集；而后者包括了一些在运行过程中动态创建的对象。
 
@@ -264,7 +264,7 @@ alert(c());
 
 本地对象，就是那些官方定义好了的对象。内置对象是本地对象的一种，其只包含Global对象和Math对象。而宿主对象则是那些官方未定义，你自己构建的对象加上DOM和BOM对象组成的。
 
-## 请指出以下代码的区别：`function Person(){}、var person = Person()、var person = new Person()？`s
+## 请指出以下代码的区别：`function Person(){}、var person = Person()、var person = new Person()？`
 
 * 第一个是定义了一个函数Person
 * 第二个是把Person当普通函数执行，并把返回值赋值给person。
@@ -484,7 +484,7 @@ Ajax的原理简单来说通过XmlHttpRequest对象来向服务器发异步请�
 
 XMLHttpRequest是ajax的核心机制，它是在IE5中首先引入的，是一种支持异步请求的技术。简单的说，也就是javascript可以及时向服务器提出请求和处理响应，而不阻塞用户。达到无刷新的效果。
 
-![ajax](https://www.cnblogs.com/mingmingruyuedlut/archive/2011/10/18/2216553.html)
+[ajax](https://www.cnblogs.com/mingmingruyuedlut/archive/2011/10/18/2216553.html)
 
 ## 跨域
 
@@ -565,7 +565,7 @@ DomainA客户端（浏览器） ==> DomainA服务器 ==> DomainB服务器 ==> Do
 
 ## 冒泡机制
 
-![冒泡](https://img-blog.csdn.net/20140417152938734?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHVhbmxvdWlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![冒泡](http://hexobed.oss-cn-beijing.aliyuncs.com/18-8-8/4497981.jpg)
 
 ## attribute和property的区别
 
@@ -634,11 +634,11 @@ property就是一个属性，如果把DOM元素看成是一个普通的Object对
 * 用更高效的方式完成两套页面
 
 再回到那个简单的架构图，SPA这种架构，渲染是在客户端（浏览器）完成的，大致流程如下：
-![spa](https://zhanzhang.bj.bcebos.com/files/016171426057276.jpg)
+![spa](http://hexobed.oss-cn-beijing.aliyuncs.com/18-8-8/98576348.jpg)
 
 蜘蛛无法执行JS，相应的页面内容无从抓取，弊端还是那个弊端。但我们知道，传统的服务端生成页面，response里已经是服务器渲染组装好的HTML代码，浏览器只负责正确地展现，蜘蛛负责正确的解析，所以，我们需要给蜘蛛渲染完成的HTML，那么你的框架需要兼容如下流程的功能。
 
-![spa](https://zhanzhang.bj.bcebos.com/files/073631426057276.jpg)
+![spa](http://hexobed.oss-cn-beijing.aliyuncs.com/18-8-8/85352059.jpg)
 
 　我们看到，当访问为SEO所需页面的时候，数据传输到了SEO 服务器完成渲染和组装然后吐给浏览器和蜘蛛，那么蜘蛛拿到的即是完全可见且融合了SPA的页面——landing页都是蜘蛛可见的，接下去用户的点击都是SPA的页面。
 　　需要注意的是，如果你是用URL来区分SPA架构与否，那么内链及入口要全部使用SEO URL,只为用户暴露SPA的链接，JS在这里阴差阳错地成为了优势，那些SPA的链接将比较难被抓取的。
