@@ -923,9 +923,9 @@ function deepCopy(obj){
 }
 ```
 
-## 图片懒加载
+## 图片懒加载与预加载
 
-**原理**
+**懒加载原理**
 将页面中的img标签src指向一张小图片或者src为空，然后定义data-src（这个属性可以自定义命名，我才用data-src）属性指向真实的图片。src指向一张默认的图片，否则当src为空时也会向服务器发送一次请求。可以指向loading的地址。
 
 使用节流函数优化懒加载
@@ -977,6 +977,34 @@ function lazyload(event) {
 // 采用了节流函数
 window.addEventListener('scroll',throttle(lazyload,500,1000));
 
+```
+
+图片预加载，是指在一些需要展示大量图片的网站，实现图片的提前加载。从而提升用户体验。常用的方式有两种，一种是隐藏在css的background的url属性里面，一种是通过javascript的Image对象设置实例对象的src属性实现图片的预加载。相关代码如下：
+
+CSS预加载图片方式：
+
+```css
+#preload-01 { background: url(http://domain.tld/image-01.png) no-repeat -9999px -9999px; }  
+#preload-02 { background: url(http://domain.tld/image-02.png) no-repeat -9999px -9999px; }  
+#preload-03 { background: url(http://domain.tld/image-03.png) no-repeat -9999px -9999px; }
+```
+
+Javascript预加载图片的方式： 
+
+```js
+function preloadImg(url) {
+    var img = new Image();
+    img.src = url;
+    if(img.complete) {
+        //接下来可以使用图片了
+        //do something here
+    } else {
+        img.onload = function() {
+            //接下来可以使用图片了
+            //do something here
+        };
+    }
+}
 ```
 
 ## 网页各种高度
@@ -1148,3 +1176,38 @@ var onVisibilityChange = function(){
 document.addEventListener(visibilityChangeEvent, onVisibilityChange);
 ```
 
+## 防止重复发送Ajax请求
+
+用户点击之后按钮disabled;
+函数节流
+abort掉上一个请求。
+
+## JavaScript内存泄露的原因以及如何去手动释放内存
+
+> 易出现泄露的场景
+
+* XMLHttpRequest 泄漏发生在IE7-8,释放方法，将XMLHttpRequest实例对象设置为Null；
+* DOM&BOM等COM对象循环绑定 泄漏发生在IE6-8，释放方法，切断循环引用，将对对象的应用设置为Null；
+* 定时器(严格上说不能算是泄露，是被闭包持有了，是正常的表现)，对于闭包中无用的变量可以使用delete操作符进行释放；
+
+## ES6常用特性
+
+* 变量定义(let和const,可变与不可变，const定义对象的特殊情况)
+* 解构赋值
+* 模板字符串
+* 数组新API(例：Array.from(),entries(),values(),keys())
+* 箭头函数(rest参数，扩展运算符，::绑定this)
+* Set和Map数据结构(set实例成员值唯一存储key值，map实例存储键值对(key-value))
+* Promise对象(前端异步解决方案进化史，generator函数，async函数)
+* Class语法糖(super关键字)
+
+## XSS与CSRF介绍
+
+XSS是一种跨站脚本攻击，是属于代码注入的一种，攻击者通过将代码注入网页中，其他用户看到会受到影响(代码内容有请求外部服务器);
+
+CSRF是一种跨站请求伪造，冒充用户发起请求，完成一些违背用户请求的行为(删帖，改密码，发邮件，发帖等)
+
+> 防御方法举例:
+
+对一些关键字和特殊字符进行过滤(<>,?,script等)，或对用户输入内容进行URL编码(encodeURIComponent);
+Cookie不要存放用户名和密码，对cookie信息进行MD5等算法散列存放，必要时可以将IP和cookie绑定;
