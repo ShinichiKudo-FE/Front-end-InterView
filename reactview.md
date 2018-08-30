@@ -893,3 +893,7 @@ transaction.perform(testMethod);
 ```
 
 理解题目的关键是，整个组件渲染到DOM中的过程就已经处于一次大的事务中了，因此在componentDidMount方法中调用setState的时候`ReactDefaultBatchingStrategy.isBatchingUpdates = true`;这句代码已经执行过了，所以setState的结果并没有立即生效，而是扔进了dirtyComponent;因此执行三次setState的结果this.state.value的值依然是0,而setTimeout中的两次setState由于没有调用过batchedUpdates方法(isBatchingUpdates默认为false)，所以setState方法立即生效，第二次setSState同理
+
+## react开发中遇到的问题
+
+[react开发中遇到的问题](https://juejin.im/post/5aead38c6fb9a07aab29b190)
