@@ -215,6 +215,7 @@ console.log(movieid);
 ## 微信小程序开发中经常遇到的问题
 
 [开发中经常遇到的问题](https://juejin.im/post/5ab8772851882521d6578f15)
+[开发中经常遇到的问题2](https://blog.csdn.net/bangyiqing/article/details/54970253)
 
 ## 如果需要用户授权，用户选择拒绝授权，此时应该如何处理？
 
