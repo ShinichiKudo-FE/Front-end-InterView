@@ -96,3 +96,7 @@ output: {
 ## 打包出来的文件很大，怎么解决？
 
 [ webpack 打包文件体积](https://www.jianshu.com/p/a64735eb0e2b)
+
+## 按需加载
+
+[按需加载](https://www.imooc.com/article/71222)

@@ -398,11 +398,16 @@ function ParentComponent(props){
 }
 ```
 
-## react 路由实现原理
+## react 路由实现原理(重点，点链接看)
 
 URL对应Location对象，而UI是由react的 components来决定的，这样就转变成location与components之间的同步问题。
 
 [react-router](http://zhenhua-lee.github.io/react/history.html)
+
+## React-router的Link和a标签的跳转有什么区别？
+
+react-router：只更新变化的部分从而减少DOM性能消耗
+react的创新之处在于，它利用虚拟DOM的概念和diff算法实现了对页面的"按需更新"，react-router很好地继承了这一点，譬如上图所示，导航组件和三个Tab组件（通过...,通过...,通过...）的重渲染是我们不希望看到的，因为无论跳转到页面一或是页面二，它只需要渲染一次就够了。<Link>组件帮助我们实现了这个愿望，反观<a>标签，每次跳转都重渲染了导航组件和Tab组件试想一下，在一个浩大的项目里，这多么可怕！我们的"渲染"做了许多"无用功"，而且消耗了大量弥足珍贵的DOM性能！
 
 ## react的setState同步还是异步？
 
@@ -902,3 +907,13 @@ transaction.perform(testMethod);
 
 [setState能用在componentWillUpdate里吗](https://zhuanlan.zhihu.com/p/24926575)
 
+## props 与 stata的区别
+
+props是不可变的，state可以根据用户操作发生变化
+
+==props：==一般用于父组件向子组件通信，在组件之间通信使用。
+==state：==一般用于组件内部的状态维护，更新组建内部的数据，状态，更新子组件的props等。
+
+## key有什么作用？
+
+因为 React 是使用 key 属性来标志列表中的所有元素，当列表数据发生变化时，React 通过 key 可以更快的知道哪些元素发生了变化，从而只重新渲染发生变化的元素，提高效率和性能。在列表里面 key 需要唯一，一般是使用 id 作为 key 值，不建议使用 index 作为 key 值。因为如果列表发生了删除，插入等操作，列表要重排。index 值会改变，可能会影响渲染的效率和性能。
