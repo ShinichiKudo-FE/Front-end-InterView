@@ -91,6 +91,10 @@ fieldset元素
 * 如果页面背景有少许改动，一般就要改这张合并的图片，无需改的地方最好不要动，这样避 免改动更多的css
 * 由于图片 的位置需要固定为某个绝对数值，这就失去了诸如center之类的灵活性。
 
+## 三栏布局，两边固定，中间自适应
+
+[三栏布局，两边固定，中间自适应](https://segmentfault.com/a/1190000008705541)
+
 ## 图片替换文字方案
 
 > Fahrner Image Replacement (FIR)
@@ -213,6 +217,55 @@ fieldset元素
 * 缺点：简单来说CSS预处理器语言较CSS玩法变得更高级了，但同时降低了自己对最终代码的控制力。更致命的是提高了门槛，首先是上手门槛，其次是维护门槛，再来是团队整体水平和规范的门槛。这也造成了初学学习成本的昂贵。
 
 Sass、Stylus是在服务区端运行的，而less是在客户端运行的
+
+## 三种纯CSS实现三角形的方法
+
+利用 border 属性实现三角形
+
+```css
+.triangle{
+    width:0;
+    height:0;
+    border-width:20px;
+    border-style:solid dashed dashed dashed;
+    border-color:#e66161 transparent transparent transparent;
+}
+```
+
+利用 CSS3 transfrom 旋转 45 度实现三角形
+
+```css
+.message-box {
+    position:relative;
+    width:240px;
+    height:60px;
+    line-height:60px;
+    background:#E9FBE4;
+    box-shadow:1px 2px 3px #E9FBE4;
+    border:1px solid #C9E9C0;
+    border-radius:4px;
+    text-align:center;
+    color:#0C7823;
+}
+.triangle-css3 {
+    position:absolute;
+    bottom:-8px;
+    bottom:-6px;
+    left:30px;
+    overflow:hidden;
+    width:13px;
+    height:13px;
+    background:#E9FBE4;
+    border-bottom:1px solid #C9E9C0;
+    border-right:1px solid #C9E9C0;
+}
+.transform {
+    -webkit-transform:rotate(45deg);
+    -moz-transform:rotate(45deg);
+    -o-transform:rotate(45deg);
+    transform:rotate(45deg);
+}
+```
 
 ## 如果设计中使用了非标准的字体，你该如何去实现？
 

@@ -58,6 +58,10 @@ document.getElementById("parent-list").addEventListener("click",function(e) {
 
 因为JavaScript是一门函数式的面向对象编程语言，所以函数可以拥有方法。apply方法让我们构建一个参数数组传递给调用函数。它允许我们选择this的值。apply方法接收两个参数，第1个是要绑定给this的值，第2个就是一个参数数组。call方法与apply类似，将apply第二参数拆开为单个的参数。
 
+## 原型链
+
+利用原型让引用类型继承另一个引用类型的属性和方法
+
 ## javascript继承
 
 **prototype与[[prototype]]**
@@ -169,6 +173,9 @@ x // undefined
 
 **作用域（Scope）**
 作用域表示变量或函数能够被访问的范围，以及它们在什么样的上下文中被执行。一般来说，变量和函数可以被定义在全局和局部作用域范围中，变量有所谓的“函数作用域”，函数也有和变量一样的作用域。
+
+**作用域链**
+作用域链决定了哪些数据能被函数访问
 
 **全局作用域（Global Scope）**
 当某个东西是全局的，就意味着它可以在你代码中的任何地方被访问到，看下面的例子：
@@ -486,6 +493,19 @@ XMLHttpRequest是ajax的核心机制，它是在IE5中首先引入的，是一�
 
 [ajax](https://www.cnblogs.com/mingmingruyuedlut/archive/2011/10/18/2216553.html)
 
+
+## js异步解决方案
+
+[js异步解决方案](https://www.jianshu.com/p/50fd5c0b5908)
+
+## 浏览器端的EventLoop和Node的EventLoop
+
+[浏览器端的EventLoop和Node的EventLoop](https://blog.csdn.net/qq_17757973/article/details/80963145)
+
+## javascript事件绑定的方式
+
+[javascript事件绑定的方式](https://www.jianshu.com/p/2f226461712a)
+
 ## 跨域
 
 * 方式一：图片ping或script标签跨域
@@ -549,6 +569,27 @@ WebSocket protocol 是HTML5一种新的协议。它实现了浏览器与服务�
 同源策略是针对浏览器端进行的限制，可以通过服务器端来解决该问题
 
 DomainA客户端（浏览器） ==> DomainA服务器 ==> DomainB服务器 ==> DomainA客户端（浏览器）
+
+## 跨域传cookie的几种方式
+
+[ 跨域传cookie的几种方式](http://darrenzhu.iteye.com/blog/2083659)
+
+
+需要跨域访问，并传递和接收cookie，需要设置的步骤为：
+
+前端发起ajax的时候，设置withCredentials:true，让浏览器发送请求的时候带着cookie
+后端接受请求的时候，设置
+
+```js
+// 让服务器接受cookie
+header("Access-Control-Allow-Credentials:true");
+//可接受的源里面包含要发过来cookie的源。
+header("Access-Control-Allow-Origin: http://account.tcs-y.com");
+```
+
+## JS设置cookie、读取cookie、删除cookie
+
+[cookie](http://www.runoob.com/js/js-cookies.html)
 
 ## 声明提升
 
@@ -749,6 +790,9 @@ Array.prototype.values()
 Array.prototype[@@iterator]()
 ```
 
+## 判断数组
+
+[判断数组](https://segmentfault.com/a/1190000004479306)
 ## web worker
 
 [web worker](http://www.alloyteam.com/2015/11/deep-in-web-worker/)
@@ -802,6 +846,13 @@ function curry(fn,length){
 
 ## 创建对象的3种方法
 
+es5创建对象的方式  有工厂模式，构造函数模式，原型模式和  组合使用构造函数模式+原型模式
+es6可以通过class 实现对象创建的方法
+
+不同的是，Class只能通过new操作符调用，不能像es5中的构造函数一样，当成普通函数调用。
+
+Class的写法就是一种语法糖，这些功能es5都能实现，只不过使用class可以让对象原型更加清晰，更接近面向对象编程。
+
 1. `var person = new Object();`
 
 这行代码创建了Object引用类型的一个新实例，然后把该实例对象保存在变量person中。使用的构造函数是Object，它只为新对象定义了默认的属性和方法。
@@ -815,6 +866,14 @@ function curry(fn,length){
 ECMAScript5新增的方法，为了规范化原型继承。这个方法接收两个参数，一个用作新对象原型的对象和(可选的)一个新对象定义额外属性的对象。
 
 Object.create() 方法创建一个拥有指定原型和若干个指定属性的对象。
+
+## es5与es6继承的方式
+
+ES5 只需要在子类构造函数内部使用apply或者call来调用父类的函数即可在实现属性继承的同时，又能传递参数，又能让实例不互相影响
+
+ES6封装了class，extends关键字来实现继承，内部的实现原理其实依然是基于上面所讲的原型链，不过进过一层封装后，Javascript的继承得以更加简洁优雅地实现
+
+通过constructor来定义构造函数，用super调用父类的属性方法
 
 ## object.create() 与 new 的区别
 
@@ -868,6 +927,11 @@ Object.create(null)没有继承任何原型方法，也就是说它的原型链�
 console.log(Object.create({}).toString);   // function toString() { [native code] }
 console.log(Object.create(null).toString); // undefined
 ```
+
+## set与map的区别
+
+Set 对象类似于数组，且成员的值都是唯一的
+Map 对象是键值对集合，和 JSON 对象类似，但是 key 不仅可以是字符串还可以是对象
 
 ## 深拷贝和浅拷贝
 
@@ -1224,6 +1288,4 @@ Security sandbox
 iframe会阻塞主页面的Onload事件
 即时内容为空，加载也需要时间
 没有语意
-
-
 

@@ -211,3 +211,14 @@ HTTPS和HTTP的区别主要如下：
 5、TCP首部开销20字节;UDP的首部开销小，只有8个字节
 6、TCP的逻辑通信信道是全双工的可靠信道，UDP则是不可靠信道
 
+## HTTP/1.1和HTTP/1.0的区别
+
+[HTTP1.0 HTTP 1.1 HTTP 2.0主要区别](https://blog.csdn.net/linsongbin1/article/details/54980801)
+
+## 浏览器缓存
+
+[浏览器缓存](http://jixianqianduan.com/frontend-javascript/2015/12/28/nine-browser-cache-methods.html)
+
+## cache-control的值有哪些？
+
+[cache-control的值有哪些？](http://www.cnblogs.com/cuixiping/archive/2008/05/04/1181056.html)

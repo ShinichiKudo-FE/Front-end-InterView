@@ -91,7 +91,7 @@ es5写法， React.createClass
 
 ## react 生命周期
 
-[react 生命周期](https://juejin.im/post/5a062fb551882535cd4a4ce3)
+[react 生命周期](https://zhanghao-web.github.io/2018/08/13/React/%E6%88%91%E5%AF%B9React-v16-4%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3/)
 
 [react 生命周期](http://imweb.io/topic/5a08fafdef79bc941c30d8de)
 React的组件的生命周期分为三个过程：
@@ -897,3 +897,8 @@ transaction.perform(testMethod);
 ## react开发中遇到的问题
 
 [react开发中遇到的问题](https://juejin.im/post/5aead38c6fb9a07aab29b190)
+
+## setState能用在componentWillUpdate里吗
+
+[setState能用在componentWillUpdate里吗](https://zhuanlan.zhihu.com/p/24926575)
+
