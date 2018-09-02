@@ -637,3 +637,27 @@ background: green;
 
 ## 实现垂直居中和水平居中
 [16种方法实现水平居中垂直居中](https://juejin.im/post/58f818bbb123db006233ab2a)
+
+## 多列等高布局 
+
+（1）使用负边距
+
+```css
+.container{
+    overflow:hidden;
+}
+.container>div{
+    padding-bottom:200px;
+    margin-bottom:-200px;
+}
+
+```
+
+(2)使用flex
+
+```css
+.container{
+    display:flex;
+    align-items: stretch;
+}
+```

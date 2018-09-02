@@ -708,3 +708,7 @@ sltElement.dispatchEvent(event);
 ```
 
 
+## 原生app webApp，和hybird的对比
+
+[原生app webApp，和hybird的对比](https://www.cnblogs.com/huanghundaxia/p/5734209.html)
+
