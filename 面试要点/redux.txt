@@ -1,0 +1,42 @@
+Redux的三个原则
+1.单一的数据源，所有的state都存在store中
+2.state是只读的，唯一修改的方法是通过action
+3.使用纯函数来进行修改，为了描述action如何更改state tree，需要编写reducers函数
+（可以通过reducers的combineReducer()方法拆分较大的reducer）
+
+redux应用数据的生命周期应该遵循下面几个步骤
+1.调用store.dispatch(action)
+2.redux store来调用传入的reducer函数
+3.根reducer将多个子reducer输出成一个单一的state树
+4.redux store保存了根reducer返回的完整的state树
+
+store的方法
+
+store.getState(）获取state
+store.dispatch（action）更新state
+store.subscribe(listener)注册监听器
+subscribe(listener)返回的函数注销监听器
+
+
+react-redux Api
+
+> <Provider store>
+
+<Provider store> 使组件层级中的 connect() 方法都能够获得 Redux store。正常情况下，
+你的根组件应该嵌套在 <Provider> 中才能使用 connect() 方法。
+
+store (Redux Store): 应用程序中唯一的 Redux store 对象
+children (ReactElement) 组件层级的根组件。
+
+> connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+
+* [mapStateToProps(state, [ownProps]): stateProps] (Function): 如果定义该参数，组件将会监听 Redux store 
+的变化
+
+*[mapDispatchToProps(dispatch, [ownProps]): dispatchProps] (Object or Function): 如果传递的是一个对象，那么
+每个定义在该对象的函数都将被当作 Redux action creator，对象所定义的方法名将作为属性名；
+
+* [mergeProps(stateProps, dispatchProps, ownProps): props] (Function): 如果指定了这个参数，mapStateToProps()
+ 与 mapDispatchToProps() 的执行结果和组件自身的 props 将传入到这个回调函数中。
+
+* [options] (Object) 如果指定这个参数，可以定制 connector 的行为。
